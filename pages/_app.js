@@ -3,7 +3,7 @@ import "../styles/globals.css";
 import "@fontsource/montserrat";
 import { Provider } from "react-redux";
 import store from "../store";
-import Head from "next/Head";
+import Head from "next/head";
 
 function MyApp({ Component, pageProps }) {
   return (
