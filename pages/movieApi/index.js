@@ -17,6 +17,11 @@ import Button from "@mui/material/Button";
 import { db } from "../../firebaseconfig";
 import { useSelector } from "react-redux";
 import { doc, setDoc } from "firebase/firestore";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -47,6 +52,7 @@ export default function Todo() {
   const dispatch = useDispatch();
   const [shows, setShows] = useState([]);
   const { user } = useSelector((state) => state.user);
+  const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
     auth.onAuthStateChanged((value) => {
@@ -64,6 +70,14 @@ export default function Todo() {
     await setDoc(doc(db, "users", user?.uid), {
       shows,
     });
+    setOpen(true);
+  };
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
   };
 
   return (
@@ -103,7 +117,12 @@ export default function Todo() {
             </TableBody>
           </Table>
         </TableContainer>
-      </Box>{" "}
+      </Box>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          Data Added Successfully!
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
