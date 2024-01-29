@@ -92,7 +92,12 @@ export default function SignIn() {
 
   return (
     <div>
-      <div className="login-main-heading">Login Here</div>
+      <video width="640" height="360" controls>
+        <source src="/images/check.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
+      <div className="login-main-heading">Login here</div>
       <div className="login-form-div-container">
         <div className="signup-google-button" onClick={GoogleHandler}>
           <Image src={GoogleLogo} height="40" width="40" />
